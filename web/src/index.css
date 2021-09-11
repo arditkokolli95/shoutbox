@@ -1,0 +1,136 @@
+html, body {
+  min-height: 100vh;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0px auto;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+#root {
+  background: linear-gradient(45deg, #f0f0f6, blue 80%, purple);
+  background: linear-gradient(45deg, #f0f0f6 0 40%, blue 40% 80%,#b19cd9 80% 100% );
+  background: linear-gradient(#9cc4d9, #b19cd9);
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.messagesWindow {
+  border: 2px solid #f0f0f6;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.messagesWindow .messageWrapper {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 2px solid #f0f0f6;
+}
+
+.messagesWindow .messageWrapper:last-of-type {
+  border: none;
+}
+
+.messageWrapper .display-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.messageWrapper .chat-bubble {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #9cc4d9;
+  margin-bottom: 10px;
+  font-family: 'Roboto';
+}
+
+.messageWrapper .chat-bubble p,
+.messageWrapper .chat-bubble span {
+  color: #fff !important;
+}
+
+.messageWrapper .chat-bubble span {
+  background-color: rgba(255,255,255,0) !important;
+}
+
+.messageWrapper .message-post-time {
+  font-size: 12px;
+}
+
+.messagesWindow img {
+  width: 100%;
+  max-width: 450px;
+}
+.displayName {
+  width: 100%;
+  margin: 20px 0;
+  padding: 10px 5px;
+  border: 2px solid #f0f0f6;
+  border-radius: 5px;
+}
+
+.textEditorToolbar {
+  border: 2px solid #f0f0f6;
+  border-radius: 5px;
+}
+
+.textInput {
+  border: 2px solid #f0f0f6;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+
+.dropZone {
+  position: relative;
+}
+.dropZone.isDropping:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  background-color: rgba(156,196,217,0.5);
+}
+.dropZone img {
+  max-width: 150px;
+}
+
+.btn {
+  margin: 20px 0;
+  padding: 10px 25px;
+  border-radius: 5px;
+  background-color: #b19cd9;
+  border: 2px solid #b19cd9;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: transparent;
+  color: #b19cd9;
+}
