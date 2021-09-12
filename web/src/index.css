@@ -82,7 +82,10 @@ code {
 
 .messagesWindow img {
   width: 100%;
-  max-width: 450px;
+  max-width: 200px;
+  cursor: zoom-in;
+  margin-right: 15px;
+  margin-bottom: 15px;
 }
 .displayName {
   width: 100%;
@@ -100,7 +103,8 @@ code {
 .textEditorToolbar .rdw-fontsize-wrapper,
 .textEditorToolbar .rdw-fontfamily-wrapper,
 .textEditorToolbar .rdw-image-wrapper,
-.textEditorToolbar .rdw-emoji-wrapper {
+.textEditorToolbar .rdw-emoji-wrapper,
+.textEditorToolbar .rdw-colorpicker-wrapper {
   display: none;
 }
 
@@ -151,4 +155,15 @@ code {
 .btn:hover {
   background-color: transparent;
   color: #8565c4;
+}
+
+.enlargedImageWrapper {
+  background-size: contain !important;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 10000;
+  top: 0; 
+  left: 0;
+  cursor: zoom-out;
 }

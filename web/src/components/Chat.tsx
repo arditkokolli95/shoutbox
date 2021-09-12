@@ -29,10 +29,6 @@ export const Chat = (): JSX.Element => {
         })();
     }, [])
 
-
-    console.log('User IP: ', userIp);
-    console.log('User Agent: ', userAgent);
-
     const dispatch = useDispatch();
     const {
         isFetching,
@@ -65,9 +61,6 @@ export const Chat = (): JSX.Element => {
 
         await dispatch(postMessage(form));
         dispatch(getMessages())
-        console.log('htmlText ', content);
-        console.log('images - ', images);
-        console.log('editorState - ', editorState);
         setEditorState(EditorState.createEmpty());
         setImages([]);
     }

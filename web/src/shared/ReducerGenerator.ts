@@ -21,7 +21,6 @@ const ListReducerGenerator = (actionType: ActionType, state: ListState, action: 
       })
     case actionType.success:
       const { result } = action.response
-      console.log('action.response: ',action.response);
       return Object.assign({}, state, {
         isFetching: false,
         result,
