@@ -5,7 +5,7 @@ const DatabaseService = {
   messages: {
     list: async () => dbconnection('messages').orderBy('id', 'desc').select(),
     save: (newMessage: Message) => dbconnection('messages').insert(newMessage, "*"),
-    delete: (messageId: any) => dbconnection('messages').where({ id: messageId }).del(),
+    delete: (messageId: string) => dbconnection('messages').where({ id: messageId }).del(),
   }
 };
 

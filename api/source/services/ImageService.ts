@@ -1,7 +1,8 @@
-import upload from './fileUpload';
 import express from 'express';
 import fs from 'fs';
 import { UploadedFile } from "express-fileupload";
+
+const IMAGE_SEPARATOR = ';';
 
 const writeFiles = async (files: UploadedFile[]) => {
   const names = await Promise.all(files.map(async (file) => {
@@ -9,7 +10,7 @@ const writeFiles = async (files: UploadedFile[]) => {
     await fs.writeFileSync(`${__dirname}/../../public/images/${key}`, file.data);
     return key;
   }))
-  return names.join(';');
+  return names.join(IMAGE_SEPARATOR);
 }
 
 const uploadImages = async (files: UploadedFile[]): Promise<string> => {
@@ -18,7 +19,7 @@ const uploadImages = async (files: UploadedFile[]): Promise<string> => {
 
 const deleteImages = async (images: string) => {
 
-  images.split(';').map((image) => {
+  images.split(IMAGE_SEPARATOR).map((image) => {
     try {
       const filepath = `${__dirname}/../../public/images/${image}`;
       console.log('Fajll peth: ', filepath);

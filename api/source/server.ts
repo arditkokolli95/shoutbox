@@ -2,6 +2,7 @@ import express from 'express';
 import MessageRoutes from './routes/MessageRoutes';
 import cors from 'cors';
 import fileupload from "express-fileupload";
+import helmet from 'helmet';
 
 enum RouterPrefix {
   messages = '/messages'
@@ -13,7 +14,9 @@ const port = process.env.PORT || 5000;
 console.log('`${__dirname}/../public` - ', `${__dirname}/../public`);
 app.use('/static', express.static(`${__dirname}/../public`));
 
-app.use(cors())
+app.use(cors());
+
+app.use(helmet());
 
 app.use(fileupload());
 

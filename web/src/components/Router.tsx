@@ -17,8 +17,8 @@ const Router = ({  }: Props): JSX.Element => {
             <div className="container">
               <Alert/>
               <Switch>
-                <Route exact path='/' component={Home}/>
-                <Route exact path='/chat' component={Chat} />
+                <Route exact path='/' component={Chat}/>
+                <Route exact path='/About' component={() => <div>About</div>}/>
                 <Route component={NotFound} />
               </Switch>
             </div>

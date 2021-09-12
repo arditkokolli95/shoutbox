@@ -7,12 +7,13 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import MyDropzone from './MyDropzone';
 import Message from "./Message";
 import { useSelector, useDispatch } from 'react-redux';
-import { getMessages, postMessage, cleanMessages } from '../store/message/actions';
+import { getMessages, postMessage } from '../store/message/actions';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import FormData from 'form-data';
 import { browserName, browserVersion } from "react-device-detect";
-
-let interval: NodeJS.Timeout;
+import { AppDispatch } from '../store/StoreWrapper'
+import { useFetchMessages } from './hooks/useFetchMessages';
+import getUserIP from './util/GetUserIP';
 
 export const Chat = (): JSX.Element => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -20,16 +21,14 @@ export const Chat = (): JSX.Element => {
     const [username, setUsername] = useState('');
     const [userIp, setUserIP] = useState('');
     const userAgent = 'Browser Name: ' + browserName + ' | Browser Version: ' + browserVersion;
+    
+    useEffect(() => {
+        (async () => {
+            const data = await getUserIP();
+            setUserIP(data.IPv4);
+        })();
+    }, [])
 
-
-
-    async function getUserIP() {
-        const response = await fetch('https://geolocation-db.com/json/');
-        const data = await response.json();
-        setUserIP(data.IPv4);
-    }
-
-    getUserIP();
 
     console.log('User IP: ', userIp);
     console.log('User Agent: ', userAgent);
@@ -41,15 +40,7 @@ export const Chat = (): JSX.Element => {
         success,
     } = useAppSelector((state) => state.getMessagesState);
 
-    useEffect(() => {
-        interval = setInterval(() => {
-            dispatch(getMessages())
-        }, 25000)
-        return () => {
-            if (interval) clearInterval(interval);
-            dispatch(cleanMessages())
-        };
-    }, [getMessages, cleanMessages]);
+    useFetchMessages(dispatch);
 
     const onSetImage = (droppedImages: File[]) => {
         setImages([...images, ...droppedImages])
@@ -110,9 +101,14 @@ export const Chat = (): JSX.Element => {
                 </>
             </MyDropzone>
             <button onClick={onClickSend} className="btn send-msg">Send message!</button>
-            <hr></hr>
+            <hr />
+            <br />
+            <h3 className="recent-messages-title">Checkout the recent messages:</h3>
+            <br/>
             <Message messages={messages} />
         </>
     );
     ;
 };
+
+
