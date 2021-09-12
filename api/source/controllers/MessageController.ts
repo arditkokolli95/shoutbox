@@ -8,7 +8,7 @@ type APICall = (req: express.Request, res: express.Response) => void;
 
 const MESSAGES_LIMIT = 20;
 
-const getMessages: APICall = async(req, res) => {
+const getMessages: APICall = async (req, res) => {
   try {
     const messages = await DatabaseService.messages.list();
     return res.json(messages);
@@ -17,23 +17,31 @@ const getMessages: APICall = async(req, res) => {
   }
 };
 
-const postMessage: APICall = async(req, res) => {
-    const numberOfMessages = (await DatabaseService.messages.list()).length;
+const postMessage: APICall = async (req, res) => {
+  try {
+    let filesArray = ((req.files && req.files.images) || []) as UploadedFile[];
+    if (!Array.isArray(filesArray)) {
+      filesArray = [filesArray];
+    }
+    console.log('req.files - ', req.files);
+    console.log('filesArray - ', filesArray);
+    const imagesPaths = await ImageService.uploadImages(filesArray);
+    const newMessage = new Message(req.body.content, imagesPaths, req.body.display_name, req.body.user_ip, req.body.user_agent);
+    const [insertionResponse] = await DatabaseService.messages.save(newMessage);
+
+    const messagesList = await DatabaseService.messages.list();
+    const numberOfMessages = messagesList.length;
+
+    //Delete oldest message if the message limit is exceeded
     if (numberOfMessages > MESSAGES_LIMIT) {
-      // delete image
-      // delete message
+      await ImageService.deleteImages(messagesList[(numberOfMessages - 1)].images);
+      await DatabaseService.messages.delete(messagesList[(numberOfMessages - 1)].id);
     }
 
-  try {
-    const filesArray = ((req.files && req.files.images) || []) as UploadedFile[];
-    console.log('req.files - ', req.files);
-    const imagesPaths = await ImageService.uploadImages(filesArray);
-    const newMessage = new Message(req.body.content, imagesPaths, req.body.display_name);
-    const [insertionResponse] = await DatabaseService.messages.save(newMessage);
     return res.json(insertionResponse);
   } catch (err) {
-      console.log('err - ',err);
-      return res.send(err);
+    console.log('err - ', err);
+    return res.send(err);
   }
 }
 
@@ -43,109 +51,3 @@ const MessageController = {
 }
 
 export default MessageController;
-
-// exports.list_all_tasks = function(req, res) {
-//   Task.find({}, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
-
-
-
-
-// exports.create_a_task = function(req, res) {
-//   var new_task = new Task(req.body);
-//   new_task.save(function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
-
-// exports.read_a_task = function(req, res) {
-//   Task.findById(req.params.taskId, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
-
-
-// exports.update_a_task = function(req, res) {
-//   Task.findOneAndUpdate({_id: req.params.taskId}, req.body, {new: true}, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
-
-
-// exports.delete_a_task = function(req, res) {
-
-
-//   Task.remove({
-//     _id: req.params.taskId
-//   }, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json({ message: 'Task successfully deleted' });
-//   });
-// };
-
-// export default MessageController;  return res.json(messages);
-//   } catch (err) {
-//     return res.send(err);
-//   }
-// };
-
-// exports.list_all_tasks = function(req, res) {
-//   Task.find({}, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
-
-
-
-
-// exports.create_a_task = function(req, res) {
-//   var new_task = new Task(req.body);
-//   new_task.save(function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
-
-// exports.read_a_task = function(req, res) {
-//   Task.findById(req.params.taskId, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
-
-
-// exports.update_a_task = function(req, res) {
-//   Task.findOneAndUpdate({_id: req.params.taskId}, req.body, {new: true}, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
-
-
-// exports.delete_a_task = function(req, res) {
-
-
-//   Task.remove({
-//     _id: req.params.taskId
-//   }, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json({ message: 'Task successfully deleted' });
-//   });
-// };

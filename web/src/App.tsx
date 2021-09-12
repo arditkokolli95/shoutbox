@@ -1,5 +1,3 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Router from './components/Router';
 import StoreWrapper from './store/StoreWrapper';
