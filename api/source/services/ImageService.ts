@@ -22,7 +22,7 @@ const deleteImages = async (images: string) => {
   images.split(IMAGE_SEPARATOR).map((image) => {
     try {
       const filepath = `${__dirname}/../../public/images/${image}`;
-      console.log('Fajll peth: ', filepath);
+      //console.log('Fajll peth: ', filepath);
       fs.unlinkSync(filepath);
       //file removed
     } catch (err) {

@@ -1,5 +1,4 @@
 export default function imageEnlarge(imageSrc: string) {
-    console.log('Image Source: ',imageSrc);
     imageSrc = encodeURI(imageSrc);
     var enlargedImageWrapper = document.createElement("div");
     enlargedImageWrapper.className = "enlargedImageWrapper";

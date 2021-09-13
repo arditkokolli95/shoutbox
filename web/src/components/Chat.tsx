@@ -76,7 +76,7 @@ export const Chat = (): JSX.Element => {
                 <input
                     type='text'
                     name='text'
-                    placeholder='Display your name as...'
+                    placeholder='Display your name as...(optional)'
                     value={username}
                     onChange={onUsernameChange}
                     className="displayName"
