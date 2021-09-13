@@ -12,7 +12,6 @@ interface Props {
 const Router = ({  }: Props): JSX.Element => {
   return (
     <BrowserRouter>
-          <div className='App'>
             {/* <Navbar /> */}
             <div className="container">
               <Alert/>
@@ -22,7 +21,6 @@ const Router = ({  }: Props): JSX.Element => {
                 <Route component={NotFound} />
               </Switch>
             </div>
-          </div>
         </BrowserRouter>
   );
 }
